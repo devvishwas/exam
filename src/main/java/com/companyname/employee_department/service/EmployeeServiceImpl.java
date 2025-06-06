@@ -64,6 +64,27 @@ public class EmployeeServiceImpl implements EmployeeService{
             dto.setDepartmentId(employee.getDepartment().getId());
             return dto;
         }
+
+    @Override
+    @Transactional
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO) {
+        Employee employee = employeeRepository.findById(employeeDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        employee.setName(employeeDTO.getName());
+        employee.setEmail(employeeDTO.getEmail());
+        employee.setPosition(employeeDTO.getPosition());
+        employee.setSalary(employeeDTO.getSalary());
+
+        Department dept = departmentRepository.findById(employeeDTO.getDepartmentId())
+                .orElseThrow(() -> new RuntimeException("Department not found"));
+        employee.setDepartment(dept);
+
+        employeeRepository.save(employee);
+
+        return convertToDTO(employee);
     }
+
+}
 
 

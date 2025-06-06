@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EmployeeController {
 
     @Autowired
@@ -33,5 +34,12 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable String employeeId) {
         employeeService.deleteEmployee(employeeId);
     }
+
+    @PutMapping
+    @CrossOrigin(origins = "http://localhost:4200")
+    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.updateEmployee(employeeDTO);
+    }
+
 }
 
